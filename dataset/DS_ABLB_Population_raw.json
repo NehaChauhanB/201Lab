@@ -1,0 +1,37 @@
+{
+	"name": "DS_ABLB_Population_raw",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ABLB_CovidReporting",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FileName_gz": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "raw"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().FileName_gz",
+					"type": "Expression"
+				},
+				"container": "popluation"
+			},
+			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
+			"compressionLevel": "Optimal",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

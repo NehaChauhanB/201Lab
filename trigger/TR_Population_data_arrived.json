@@ -1,0 +1,27 @@
+{
+	"name": "TR_Population_data_arrived",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_Execute_Population_Master",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"FileName_PopulationByAge": "population_by_age.tsv.gz"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/popluation/blobs/population_by_age.tsv.gz",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/05537344-70be-4f05-96c5-7cd141281310/resourceGroups/201LabDemo-rg/providers/Microsoft.Storage/storageAccounts/201labdemosa",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

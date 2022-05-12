@@ -1,0 +1,106 @@
+{
+	"name": "PL_Execute_ECDC_Data_Master",
+	"properties": {
+		"activities": [
+			{
+				"name": "EXP_IngestECDCData",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_HttpToAdls_ECDCList",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "EXP_Process_CasesAndDeath",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "EXP_IngestECDCData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_Process_CasesAndDeaths",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "EXP_Process_HospitalAdmissions",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "EXP_IngestECDCData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_Process_HospitalAdmissions",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "EXP_Sqlize_HospitalAdmission",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "EXP_Process_HospitalAdmissions",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ADLSToASD_HospitalAdmissionsDaily",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "EXP_Sqlize_CasesAndDeath",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "EXP_Process_CasesAndDeath",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ADLSToASD_CasesAndDeath",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Master Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-04-28T19:15:53Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

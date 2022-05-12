@@ -1,0 +1,43 @@
+{
+	"name": "DS_Http_CasesDeathRawCsv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_http_EDC",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"sourceBaseURL": {
+					"value": "@dataset().BaseUrl",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"BaseUrl": {
+				"type": "string"
+			},
+			"RelativeUrl": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "raw"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().RelativeUrl",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

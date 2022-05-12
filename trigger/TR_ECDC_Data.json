@@ -1,0 +1,25 @@
+{
+	"name": "TR_ECDC_Data",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_Execute_ECDC_Data_Master",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2022-05-10T19:14:00Z",
+				"endTime": "2022-05-15T19:14:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

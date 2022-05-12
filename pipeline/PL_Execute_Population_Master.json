@@ -1,0 +1,37 @@
+{
+	"name": "PL_Execute_Population_Master",
+	"properties": {
+		"activities": [
+			{
+				"name": "EXP_IngestPopulationData",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_BlobToADLS_Population",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FileName_PopulationByAge": {
+							"value": "@pipeline().parameters.FileName_PopulationByAge",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"FileName_PopulationByAge": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Master Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-04-28T18:37:23Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

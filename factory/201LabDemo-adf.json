@@ -1,0 +1,9 @@
+{
+	"name": "201LabDemo-adf",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7d6a7e7f-7e3b-4904-aa7c-e72f45caafe7",
+		"tenantId": "85c997b9-f494-46b3-a11d-772983cf6f11"
+	}
+}
