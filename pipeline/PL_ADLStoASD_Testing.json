@@ -167,6 +167,79 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Copy Logs",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "CPD_TestingData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT '@{pipeline().DataFactory}' as DataFactory_Name,\n\n'@{pipeline().Pipeline}' as Pipeline_Name,\n\n'@{activity('CPD_TestingData').output.executionDetails[0].source.type}' as Source_Type,\n\n'@{activity('CPD_TestingData').output.executionDetails[0].sink.type}' as Sink_Type,\n\n'@{activity('CPD_TestingData').output.executionDetails[0].status}' as Execution_Status,\n\n'@{activity('CPD_TestingData').output.rowsRead}' as RowsRead,\n\n'@{activity('CPD_TestingData').output.rowsCopied}' as RowsWritten,\n\n'@{activity('CPD_TestingData').output.copyDuration}' as CopyDurationInSecs,\n\n'@{activity('CPD_TestingData').output.executionDetails[0].start}' as CopyActivity_Start_Time,\n\n'@{utcNow()}' as CopyActivity_End_Time,\n\n'@{pipeline().RunId}' as RunId,\n\n'@{pipeline().RunId}' as TriggerType,\n\n'@{pipeline().RunId}' as TriggerName,\n\n'@{pipeline().RunId}' as TriggerTime",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_ASD_demodb",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": {
+								"value": "@pipeline().parameters.SchemaName",
+								"type": "Expression"
+							},
+							"TableName": {
+								"value": "@pipeline().parameters.TableName",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ASD_demodb",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": "covid_reporting",
+							"TableName": "Logs"
+						}
+					}
+				]
 			}
 		],
 		"parameters": {
