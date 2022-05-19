@@ -1,0 +1,46 @@
+{
+	"name": "PL_ExploreVar",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set Pipeline Variable",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Var_Pipeline",
+					"value": {
+						"value": "@concat(pipeline().Pipeline,pipeline().RunId)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Append_Variable",
+				"type": "AppendVariable",
+				"dependsOn": [
+					{
+						"activity": "Set Pipeline Variable",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Var_Array",
+					"value": "Sample Value1"
+				}
+			}
+		],
+		"variables": {
+			"Var_Pipeline": {
+				"type": "String"
+			},
+			"Var_Array": {
+				"type": "Array"
+			}
+		},
+		"annotations": []
+	}
+}
